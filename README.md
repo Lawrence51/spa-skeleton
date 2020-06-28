@@ -1,4 +1,4 @@
-# spa-skeleton1
+# spa-skeleton
 
 > A Vue.js project
 
