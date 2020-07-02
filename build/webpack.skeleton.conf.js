@@ -31,9 +31,11 @@ let skeletonWebpackConfig = merge(baseWebpackConfig, {
 
 // important: enable extract-text-webpack-plugin 
 // 重点配置
+ //这里可配置 将css分离 但是会与 webpack.base.conf.js 中 createLintingRule 冲突
 skeletonWebpackConfig.module.rules[0].options.loaders = utils.cssLoaders({
   sourceMap: sourceMapEnabled,
   extract: true
 })
+console.log('############',skeletonWebpackConfig.module.rules[0])
 
 module.exports = skeletonWebpackConfig

@@ -4,8 +4,5 @@ export default new Vue({
   components: {
     Skeleton
   },
-  template: `
-    <div>
-      <skeleton id="skeleton1" style="display:none"/>
-    </div>`
+  template: `<skeleton id="skeleton1"/>`
 })

@@ -7,9 +7,19 @@ import router from './router'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
+let app = new Vue({
   router,
   components: { App },
   template: '<App/>'
 })
+
+window.mountApp = () => {
+  app.$mount('#app')
+}
+if (process.env.NODE_ENV === 'production') {
+  if (window.STYLE_READY) {
+    window.mountApp()
+  }
+} else {
+  window.mountApp()
+}

@@ -8,6 +8,7 @@ const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin')
 const portfinder = require('portfinder')
 
@@ -66,22 +67,23 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       }
     ]),
+    new ExtractTextPlugin({
+      filename: utils.assetsPath('css/[name].[contenthash].css'),
+      // Setting the following option to `false` will not extract CSS from codesplit chunks.
+      // Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.
+      // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`,
+      // increasing file size: https://github.com/vuejs-templates/webpack/issues/1110
+      allChunks: true,
+    }),
+    // inject skeleton content(DOM & CSS) into HTML
     new SkeletonWebpackPlugin({
       webpackConfig: require('./webpack.skeleton.conf'),
-      quiet: true,
-      minimize: true,
-      router: {
-        mode: 'history',
-        routes: [
-          {
-            path: '/',    //对应使用路由
-            skeletonId: 'skeleton1'    // 所用骨架屏的id标识
-          },
-        ]
-      }
-    })
+      quiet: true
+    }),
   ]
 })
+
+console.log('devWebpackConfig`````',devWebpackConfig.module.rules.map(item=>item.loader))
 
 module.exports = new Promise((resolve, reject) => {
   portfinder.basePort = process.env.PORT || config.dev.port
@@ -100,8 +102,8 @@ module.exports = new Promise((resolve, reject) => {
           messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${port}`],
         },
         onErrors: config.dev.notifyOnErrors
-          ? utils.createNotifierCallback()
-          : undefined
+        ? utils.createNotifierCallback()
+        : undefined
       }))
 
       resolve(devWebpackConfig)
