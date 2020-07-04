@@ -83,8 +83,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   ]
 })
 
-console.log('devWebpackConfig`````',devWebpackConfig.module.rules.map(item=>item.loader))
-
 module.exports = new Promise((resolve, reject) => {
   portfinder.basePort = process.env.PORT || config.dev.port
   portfinder.getPort((err, port) => {
@@ -105,7 +103,6 @@ module.exports = new Promise((resolve, reject) => {
         ? utils.createNotifierCallback()
         : undefined
       }))
-
       resolve(devWebpackConfig)
     }
   })

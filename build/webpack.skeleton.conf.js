@@ -36,6 +36,5 @@ skeletonWebpackConfig.module.rules[0].options.loaders = utils.cssLoaders({
   sourceMap: sourceMapEnabled,
   extract: true
 })
-console.log('############',skeletonWebpackConfig.module.rules[0])
 
 module.exports = skeletonWebpackConfig
